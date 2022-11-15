@@ -1,8 +1,14 @@
-from airflow.decorators import task, dag
-from airflow.operators.dummy import DummyOperator
+#Trabalho Final - EM DUPLA
+
+#Magdiel Américo / Erik Lima
+
 from airflow.models import Variable
-from datetime import datetime
+from airflow.decorators import task, dag
+from airflow.operators.python import PythonOperator
 import boto3
+from airflow.operators.dummy import DummyOperator
+from datetime import datetime
+
 
 aws_access_key_id = Variable.get('aws_access_key_id')
 aws_secret_access_key = Variable.get('aws_secret_access_key')
@@ -14,27 +20,26 @@ client = boto3.client(
 )
 
 default_args = {
-    'owner': 'Ney',
-    'start_date': datetime(2022, 4, 2)
+    'owner': 'Administrador',
+    'start_date': datetime(2022, 11, 11)
 }
 
-@dag(default_args=default_args, schedule_interval="@once", description="Executa um job Spark no EMR", catchup=False, tags=['Spark','EMR'])
+@dag(default_args=default_args, schedule_interval="@once", description="Running a job in EMR", catchup=False, tags=['Spark','EMR'])
 def indicadores_titanic():
 
     inicio = DummyOperator(task_id='inicio')
 
     @task
     def tarefa_inicial():
-        print("Começou!!")
-
+        print("Start")
     @task
     def emr_create_cluster():
-        cluster_id = client.run_job_flow( # Cria um cluster EMR
-            Name='Automated_EMR_Ney',
+        cluster_id = client.run_job_flow( 
+            Name='TrabalhoFinal_EMR_Administrador',
             ServiceRole='EMR_DefaultRole',
             JobFlowRole='EMR_EC2_DefaultRole',
             VisibleToAllUsers=True,
-            LogUri='s3://aws-logs-539445819060-us-east-1/elasticmapreduce/',
+            LogUri='s3://aws-logs-341567884088-us-east-1/elasticmapreduce/',
             ReleaseLabel='emr-6.8.0',
             Instances={
                 'InstanceGroups': [
@@ -53,10 +58,10 @@ def indicadores_titanic():
                         'InstanceCount': 1,
                     }
                 ],
-                'Ec2KeyName': 'ney-pucminas-testes',
+                'Ec2KeyName': 'user_miriam_1',
                 'KeepJobFlowAliveWhenNoSteps': True,
                 'TerminationProtected': False,
-                'Ec2SubnetId': 'subnet-09b06b5d8fc0d0062'
+                'Ec2SubnetId': 'subnet-039b9966bd755d111'
             },
 
             Applications=[{'Name': 'Spark'}, {'Name': 'Hive'}],
@@ -93,7 +98,7 @@ def indicadores_titanic():
                                 '--master', 'yarn',
                                 '--deploy-mode', 'cluster',
                                 '--packages', 'io.delta:delta-core_2.12:2.1.0',
-                                's3://emr-code-539445819060/ney/pyspark/titanic_example_delta.py'
+                                's3://miriam-341567884088/titanic/titanic.csv'
                                 ]
                     }
                 }
