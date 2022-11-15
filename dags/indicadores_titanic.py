@@ -98,7 +98,7 @@ def indicadores_titanic():
                                 '--master', 'yarn',
                                 '--deploy-mode', 'cluster',
                                 '--packages', 'io.delta:delta-core_2.12:2.1.0',
-                                's3://miriam-341567884088/titanic/titanic.csv'
+                                's3://miriam-341567884088/spark/titanic_example_delta.py'
                                 ]
                     }
                 }
@@ -114,7 +114,7 @@ def indicadores_titanic():
             ClusterId=cid,
             StepId=stepId,
             WaiterConfig={
-                'Delay': 10,
+                'Delay': 30,
                 'MaxAttempts': 600
             }
         )
