@@ -58,7 +58,7 @@ def indicadores_titanic():
                         'InstanceCount': 1,
                     }
                 ],
-                'Ec2KeyName': 'ec2-Administrador',
+                'Ec2KeyName': 'chave-miriam',
                 'KeepJobFlowAliveWhenNoSteps': True,
                 'TerminationProtected': False,
                 'Ec2SubnetId': 'subnet-039b9966bd755d111'
