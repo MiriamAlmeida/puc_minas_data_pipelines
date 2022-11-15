@@ -58,7 +58,7 @@ def indicadores_titanic():
                         'InstanceCount': 1,
                     }
                 ],
-                'Ec2KeyName': 'user_miriam_1',
+                'Ec2KeyName': 'ec2-Administrador',
                 'KeepJobFlowAliveWhenNoSteps': True,
                 'TerminationProtected': False,
                 'Ec2SubnetId': 'subnet-039b9966bd755d111'
