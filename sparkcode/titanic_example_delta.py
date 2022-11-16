@@ -65,7 +65,7 @@ print("Old data - with time travel")
     spark.read.format("delta")
     .option("versionAsOf", "0")
     .load("s3://miriam-341567884088/silver/")
-    .where("PassengerId < 6 OR PassengerId > 888")
+    .where("PassengerId > 6 OR PassengerId < 888")
     .show()
 )
 
