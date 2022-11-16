@@ -1,7 +1,3 @@
-#Trabalho Final - EM DUPLA
-
-#Magdiel Américo / Erik Lima
-
 from airflow.models import Variable
 from airflow.decorators import task, dag
 from airflow.operators.python import PythonOperator
